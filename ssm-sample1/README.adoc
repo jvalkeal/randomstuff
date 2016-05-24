@@ -1,0 +1,40 @@
+# linked regions sample
+
+## statechart exported from uml
+
+image::https://cloud.githubusercontent.com/assets/50398/15517429/951e0eb8-21ef-11e6-96c5-c6457523c01f.png[]
+
+## build and test
+
+```
+$ ./gradlew clean build
+
+```
+
+# execute
+
+```
+$ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+...
+S1
+Step1
+task3
+task4
+JOIN2
+Step0
+task1
+task2
+JOIN1
+S2
+Step01
+step5
+step6
+JOIN4
+Step11
+step7
+step8
+JOIN5
+S3
+...
+```
+
