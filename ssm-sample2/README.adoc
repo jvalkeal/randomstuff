@@ -1,0 +1,31 @@
+# Model in DB example
+
+This is a very simplified demo of keeping states and transitions in a database.
+
+## build and test
+
+```
+$ ./gradlew clean build
+
+```
+
+# execute
+
+```
+$ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+```
+
+(Or run `DemoApplication` within STS as a boot app)
+
+Open browser with address `http://localhost:8080/`. Every request will build a new machine.
+
+On default states and transitions are populated as
+```
+statesRepository.save(new States("S1", true));
+statesRepository.save(new States("S2"));
+statesRepository.save(new States("S3"));
+transitionsRepository.save(new Transitions("S1", "S2", "E1"));
+transitionsRepository.save(new Transitions("S2", "S3", "E2"));
+```
+
+Which can be modified by using embedded `h2-console`. 
