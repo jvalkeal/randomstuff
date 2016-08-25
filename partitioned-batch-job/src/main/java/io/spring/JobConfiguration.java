@@ -83,7 +83,7 @@ public class JobConfiguration {
 
 	@Bean
 	public PartitionHandler partitionHandler(TaskLauncher taskLauncher, JobExplorer jobExplorer) throws Exception {
-		Resource resource = resourceLoader.getResource("hdfs:/repo/partitioned-batch-job-1.0.0.BUILD-SNAPSHOT.jar");
+		Resource resource = resourceLoader.getResource("hdfs:/dataflow/repo/partitioned-batch-job-1.0.0.BUILD-SNAPSHOT.jar");
 		DeployerPartitionHandler partitionHandler = new DeployerPartitionHandler(taskLauncher, jobExplorer, resource, "workerStep");
 		final Map<String, String> environmentProperties = new HashMap<>();
 		environmentProperties.put("spring.profiles.active", "worker");
