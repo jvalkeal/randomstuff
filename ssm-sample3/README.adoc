@@ -1,0 +1,52 @@
+# linked regions sample
+
+## statechart exported from uml
+
+image::https://cloud.githubusercontent.com/assets/50398/20247534/8633c078-a9c6-11e6-9b00-2c2d87b6408b.png[]
+
+## build and test
+
+```
+$ ./gradlew clean build
+
+```
+
+# execute
+
+```
+$ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+...
+OPEN
+SAVED
+VALIDATED
+CLOSED
+...
+```
+
+[NOTE]
+====
+Why intermediate `TMP` state?
+
+Current _1.1.1.RELEASE_ has a bug which is causing some trouble with
+transitions which goes to transient states like _junctions_ and end up
+back to same source via anonymous transitions. These are already fixed
+in _1.2.0.M2_ and _1.2.0.BUILD-SNAPSHOT_ versions. At a time of
+writing this, it is not yet sure if these can be backported to _1.1.x_
+series.
+
+With _1.2.X_ you can draw transition directly from
+`AWAITING_CONDITION` to `HAS_ERROR`.
+====
+
+In a `StateMachineTests` test `testPauseAfterThreeFailedValidations`
+is setting exception into extended state variable _error_ before
+machine is started. Having this extended state variable is causing
+machine to loop between `AWAITING_CONDITION` and `HAS_ERROR` junction
+due to their transitions guard conditions. Eventually when 3 loops has
+been executed, transition back to `SAVED` is done and effectively
+machine is halted there because transition to `HAS_ERROR` guarded by
+`isPausedGuard` denies further transitions.
+
+```
+
+```

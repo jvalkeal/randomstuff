@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_RtKVUKmmEeasH9qRmhZPUw" name="RootElement">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_RtV7gKmmEeasH9qRmhZPUw" name="StateMachine">
+    <region xmi:type="uml:Region" xmi:id="_Rt-NoKmmEeasH9qRmhZPUw" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_yNk3EKmnEeasH9qRmhZPUw" source="_wOCBMKmnEeasH9qRmhZPUw" target="_YJpQkKmmEeasH9qRmhZPUw"/>
+      <transition xmi:type="uml:Transition" xmi:id="_yzdyYKmnEeasH9qRmhZPUw" source="_YJpQkKmmEeasH9qRmhZPUw" target="_alb9kKmmEeasH9qRmhZPUw"/>
+      <transition xmi:type="uml:Transition" xmi:id="_zr_V0KmnEeasH9qRmhZPUw" guard="_mEOGUKmsEeasH9qRmhZPUw" source="_alb9kKmmEeasH9qRmhZPUw" target="_sD90gKmnEeasH9qRmhZPUw">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_mEOGUKmsEeasH9qRmhZPUw">
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_mEOGUamsEeasH9qRmhZPUw">
+            <language>bean</language>
+            <body>isPausedGuard</body>
+          </specification>
+        </ownedRule>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_0XVY4KmnEeasH9qRmhZPUw" source="_sD90gKmnEeasH9qRmhZPUw" target="_b-hQYKmmEeasH9qRmhZPUw"/>
+      <transition xmi:type="uml:Transition" xmi:id="_1BphMKmnEeasH9qRmhZPUw" source="_b-hQYKmmEeasH9qRmhZPUw" target="_dyXzoKmmEeasH9qRmhZPUw"/>
+      <transition xmi:type="uml:Transition" xmi:id="_2CRQsKmnEeasH9qRmhZPUw" guard="_NN-wEKmtEeasH9qRmhZPUw" source="_sD90gKmnEeasH9qRmhZPUw" target="_flQGgKmmEeasH9qRmhZPUw">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_NN-wEKmtEeasH9qRmhZPUw">
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_NN-wEamtEeasH9qRmhZPUw">
+            <language>bean</language>
+            <body>hasErrorGuard</body>
+          </specification>
+        </ownedRule>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_AYpOoKmoEeasH9qRmhZPUw" source="_flQGgKmmEeasH9qRmhZPUw" target="_rSXBUKm7EeasH9qRmhZPUw">
+        <trigger xmi:type="uml:Trigger" xmi:id="_psoUQKmoEeasH9qRmhZPUw" event="_KsTPwKmoEeasH9qRmhZPUw"/>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_6rmhYKmpEeasH9qRmhZPUw" guard="_EmU9wKmtEeasH9qRmhZPUw" source="_sD90gKmnEeasH9qRmhZPUw" target="_alb9kKmmEeasH9qRmhZPUw">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_EmU9wKmtEeasH9qRmhZPUw">
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_EmU9wamtEeasH9qRmhZPUw">
+            <language>bean</language>
+            <body>shouldPauseGuard</body>
+          </specification>
+        </ownedRule>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_PN2YQKm8EeasH9qRmhZPUw" source="_rSXBUKm7EeasH9qRmhZPUw" target="_sD90gKmnEeasH9qRmhZPUw"/>
+      <subvertex xmi:type="uml:State" xmi:id="_YJpQkKmmEeasH9qRmhZPUw" name="OPEN"/>
+      <subvertex xmi:type="uml:State" xmi:id="_alb9kKmmEeasH9qRmhZPUw" name="SAVED"/>
+      <subvertex xmi:type="uml:State" xmi:id="_b-hQYKmmEeasH9qRmhZPUw" name="VALIDATED"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_dyXzoKmmEeasH9qRmhZPUw" name="CLOSED"/>
+      <subvertex xmi:type="uml:State" xmi:id="_flQGgKmmEeasH9qRmhZPUw" name="AWAITING_VALIDATION">
+        <entry xmi:type="uml:FunctionBehavior" xmi:id="_sER_wKm2EeasH9qRmhZPUw" name="validateAction">
+          <language>bean</language>
+          <body>validateAction</body>
+        </entry>
+      </subvertex>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_sD90gKmnEeasH9qRmhZPUw" name="HAS_ERROR" kind="junction"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_wOCBMKmnEeasH9qRmhZPUw" name=""/>
+      <subvertex xmi:type="uml:State" xmi:id="_rSXBUKm7EeasH9qRmhZPUw" name="TMP"/>
+    </region>
+  </packagedElement>
+  <packagedElement xmi:type="uml:TimeEvent" xmi:id="_KsTPwKmoEeasH9qRmhZPUw" name="TimeEvent" isRelative="true">
+    <when xmi:type="uml:TimeExpression" xmi:id="_jaRlYKmoEeasH9qRmhZPUw">
+      <expr xmi:type="uml:LiteralInteger" xmi:id="_jaRlYamoEeasH9qRmhZPUw" value="3000"/>
+    </when>
+  </packagedElement>
+</uml:Model>
