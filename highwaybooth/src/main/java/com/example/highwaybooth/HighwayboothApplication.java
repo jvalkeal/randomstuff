@@ -131,7 +131,7 @@ public class HighwayboothApplication implements CommandLineRunner {
 					.target(STATE_TRAFFICLIGHT_RED)
 					.event(EVENT_AFTER_EXIT)
 					.and()
-					// we go open automatically when payment is made
+				// we go open automatically when payment is made
 				.withExternal()
 					.source(STATE_TURNSTILE_CLOSED)
 					.target(STATE_TURNSTILE_OPEN)
@@ -151,7 +151,7 @@ public class HighwayboothApplication implements CommandLineRunner {
 					.action(paymentAddedAction())
 					.event(EVENT_PAYMENT_ADD)
 					.and()
-				// we just want to handle even from car detector
+				// we just want to handle event from car detector
 				.withInternal()
 					.source(STATE_CONTROL)
 					.action(vehicleDetectedAction())
