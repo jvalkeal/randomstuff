@@ -179,6 +179,7 @@ public class HighwayboothApplication implements CommandLineRunner {
 
 		@Bean
 		public Action<String, String> paymentAddedAction() {
+			// update balance in extended state per received cents
 			return context -> {
 				Integer payment = context.getMessageHeaders().get(HEADER_PAYMENT, Integer.class);
 				Integer balance = context.getExtendedState().get(VARIABLE_BALANCE, Integer.class);
