@@ -5,9 +5,10 @@
 
 ```
 $ ./gradlew clean build
+```
 
-BUILD SUCCESSFUL in 4s
-6 actionable tasks: 6 executed
+```
+$ ./mvnw clean package
 ```
 
 ## execute
@@ -60,5 +61,17 @@ $ java -jar build/libs/highwaybooth-0.0.1-SNAPSHOT.jar
 2018-03-10 15:06:26.357  INFO 20606 --- [       Thread-2] o.s.s.support.LifecycleObjectSupport     : stopped CONTROL TURNSTILE_OPEN TURNSTILE_CLOSED TRAFFICLIGHT_RED TRAFFICLIGHT_GREEN INITIAL  /  / uuid=3a1d4c5a-18d6-4bc1-9ca3-ef5d1e624355 / id=null
 2018-03-10 15:06:26.358  INFO 20606 --- [       Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
 2018-03-10 15:06:26.358  INFO 20606 --- [       Thread-2] o.s.s.support.LifecycleObjectSupport     : destroy called
+```
+
+Or run with gradle build
+
+```
+$ ./gradlew bootRun
+```
+
+Or run with maven build
+
+```
+$ ./mvnw spring-boot:run
 ```
 
