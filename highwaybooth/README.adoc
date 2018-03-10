@@ -1,0 +1,64 @@
+#  Highway Tool Booth Sample
+
+
+## build and test
+
+```
+$ ./gradlew clean build
+
+BUILD SUCCESSFUL in 4s
+6 actionable tasks: 6 executed
+```
+
+## execute
+
+```
+$ java -jar build/libs/highwaybooth-0.0.1-SNAPSHOT.jar 
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.0.RELEASE)
+
+2018-03-10 15:06:24.893  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Starting HighwayboothApplication on cypher with PID 20606 (/home/jvalkealahti/repos/jvalkeal/randomstuff/highwaybooth/build/libs/highwaybooth-0.0.1-SNAPSHOT.jar started by jvalkealahti in /home/jvalkealahti/repos/jvalkeal/randomstuff/highwaybooth)
+2018-03-10 15:06:24.900  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : No active profile set, falling back to default profiles: default
+2018-03-10 15:06:24.938  INFO 20606 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f: startup date [Sat Mar 10 15:06:24 GMT 2018]; root of context hierarchy
+2018-03-10 15:06:25.564  INFO 20606 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.statemachine.config.configuration.StateMachineAnnotationPostProcessorConfiguration' of type [org.springframework.statemachine.config.configuration.StateMachineAnnotationPostProcessorConfiguration$$EnhancerBySpringCGLIB$$27022eeb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-10 15:06:25.737  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state INITIAL
+2018-03-10 15:06:25.738  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state CONTROL
+2018-03-10 15:06:25.742  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TURNSTILE_CLOSED
+2018-03-10 15:06:25.743  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started org.springframework.statemachine.support.DefaultStateMachineExecutor@706a04ae
+2018-03-10 15:06:25.744  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started TURNSTILE_OPEN TURNSTILE_CLOSED  / TURNSTILE_CLOSED / uuid=1c3abe69-01c3-4d5b-9522-0c189fc58a2c / id=null
+2018-03-10 15:06:25.744  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TRAFFICLIGHT_RED
+2018-03-10 15:06:25.744  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started org.springframework.statemachine.support.DefaultStateMachineExecutor@67b467e9
+2018-03-10 15:06:25.744  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started TRAFFICLIGHT_RED TRAFFICLIGHT_GREEN  / TRAFFICLIGHT_RED / uuid=7854c272-af26-4fe3-9d61-871dae6dd2ac / id=null
+2018-03-10 15:06:25.745  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started org.springframework.statemachine.support.DefaultStateMachineExecutor@47db50c5
+2018-03-10 15:06:25.745  INFO 20606 --- [           main] o.s.s.support.LifecycleObjectSupport     : started CONTROL TURNSTILE_OPEN TURNSTILE_CLOSED TRAFFICLIGHT_RED TRAFFICLIGHT_GREEN INITIAL  / CONTROL,TURNSTILE_CLOSED,TRAFFICLIGHT_RED / uuid=3a1d4c5a-18d6-4bc1-9ca3-ef5d1e624355 / id=null
+2018-03-10 15:06:26.327  INFO 20606 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-10 15:06:26.332  INFO 20606 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
+2018-03-10 15:06:26.341  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Started HighwayboothApplication in 1.797 seconds (JVM running for 2.221)
+2018-03-10 15:06:26.347  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Vehicle CAR detected, reset balance to -150
+2018-03-10 15:06:26.348  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 25 new balance is -125
+2018-03-10 15:06:26.348  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 25 new balance is -100
+2018-03-10 15:06:26.349  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 25 new balance is -75
+2018-03-10 15:06:26.349  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 25 new balance is -50
+2018-03-10 15:06:26.349  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 25 new balance is -25
+2018-03-10 15:06:26.350  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 10 new balance is -15
+2018-03-10 15:06:26.350  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 10 new balance is -5
+2018-03-10 15:06:26.350  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Received payment 10 new balance is 5
+2018-03-10 15:06:26.351  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TURNSTILE_OPEN
+2018-03-10 15:06:26.352  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TRAFFICLIGHT_GREEN
+2018-03-10 15:06:26.352  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Balance left returning 5
+2018-03-10 15:06:26.352  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TURNSTILE_CLOSED
+2018-03-10 15:06:26.353  INFO 20606 --- [           main] c.e.h.HighwayboothApplication            : Enter state TRAFFICLIGHT_RED
+2018-03-10 15:06:26.354  INFO 20606 --- [       Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f: startup date [Sat Mar 10 15:06:24 GMT 2018]; root of context hierarchy
+2018-03-10 15:06:26.356  INFO 20606 --- [       Thread-2] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
+2018-03-10 15:06:26.356  INFO 20606 --- [       Thread-2] o.s.s.support.LifecycleObjectSupport     : stopped org.springframework.statemachine.support.DefaultStateMachineExecutor@47db50c5
+2018-03-10 15:06:26.357  INFO 20606 --- [       Thread-2] o.s.s.support.LifecycleObjectSupport     : stopped CONTROL TURNSTILE_OPEN TURNSTILE_CLOSED TRAFFICLIGHT_RED TRAFFICLIGHT_GREEN INITIAL  /  / uuid=3a1d4c5a-18d6-4bc1-9ca3-ef5d1e624355 / id=null
+2018-03-10 15:06:26.358  INFO 20606 --- [       Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-10 15:06:26.358  INFO 20606 --- [       Thread-2] o.s.s.support.LifecycleObjectSupport     : destroy called
+```
+
