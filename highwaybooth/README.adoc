@@ -1,4 +1,4 @@
-#  Highway Tool Booth Sample
+#  Highway Toll Booth Sample
 
 
 ## build and test
