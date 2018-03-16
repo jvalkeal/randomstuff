@@ -1,0 +1,59 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url "http://repo.springsource.org/libs-snapshot" }
+	maven { url "http://repo.springsource.org/libs-release" }
+	maven { url "http://repo.springsource.org/libs-milestone" }
+}
+
+
+ext {
+	springCloudVersion = 'Dalston.SR5'
+	springCloudSkipperVersion = '1.0.2.BUILD-SNAPSHOT'
+	reactorVersion = 'Aluminium-SR3'
+	reactorNettyVersion = '0.6.6.RELEASE'
+	objenesisVersion = '2.1'
+}
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-starter-skipper-server')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-skipper-dependencies:${springCloudSkipperVersion}"
+		mavenBom "io.projectreactor:reactor-bom:${reactorVersion}"
+	}
+	dependencies {
+		// latest reactor bom is still using reactor-netty:0.6.3.RELEASE
+		// so we need to change it here because cf java client use
+		// dedicated netty version while they should have been using
+		// reactor boms assuming reactor boms would be up-to-date
+		dependency "io.projectreactor.ipc:reactor-netty:${reactorNettyVersion}"
+		// this is unfortunate mess with objenesis as there's versions 2.1 and 2.6
+		// in build path and nobody manages version and maven vs. gradle is different
+		dependency "org.objenesis:objenesis:${objenesisVersion}"
+	}
+}
