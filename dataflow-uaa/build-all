@@ -1,0 +1,3 @@
+#!/bin/bash
+./build-uaa && ./build-docker
+

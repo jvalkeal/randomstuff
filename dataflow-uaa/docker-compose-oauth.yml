@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  uaa-server:
+    image: springcloud/uaa:latest
+    container_name: uaa-server-sectest
+    ports:
+      - "8080:8080"
+    network_mode: host
+
+  rabbitmq-server:
+    image: rabbitmq:latest
+    container_name: rabbitmq-server-sectest
+    ports:
+      - "5672:5672"
+    network_mode: host
+
+  skipper-server:
+    image: springcloud/spring-cloud-skipper-server:latest
+    container_name: skipper-server-sectest
+    ports:
+      - "7577:7577"
+    network_mode: host
+    environment:
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
+
+  dataflow-server:
+    image: springcloud/spring-cloud-dataflow-server:latest
+    container_name: dataflow-server-sectest
+    ports:
+      - "9393:9393"
+    network_mode: host
+    environment:
+      - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://localhost:7577/api
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672
+      - SECURITY_OAUTH2_CLIENT_CLIENTID=dataflow
+      - SECURITY_OAUTH2_CLIENT_CLIENTSECRET=secret
+      - SECURITY_OAUTH2_CLIENT_SCOPE=openid
+      - SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI=http://localhost:8080/uaa/oauth/token
+      - SECURITY_OAUTH2_CLIENT_USERAUTHORIZATIONURI=http://localhost:8080/uaa/oauth/authorize
+      - SECURITY_OAUTH2_RESOURCE_USERINFOURI=http://localhost:8080/uaa/userinfo
+      - SECURITY_OAUTH2_RESOURCE_TOKENINFOURI=http://localhost:8080/uaa/check_token
+
