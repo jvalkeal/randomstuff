@@ -136,12 +136,14 @@ oauth:
     ssl: true
   clients:
     dataflow:
-      authorities: uaa.resource
+      authorities: uaa.resource,dataflow.create,dataflow.view
       authorized-grant-types: password,implicit,authorization_code,client_credentials,refresh_token
       autoapprove:
       - openid
+      - dataflow.view
+      - dataflow.create
       redirect-uri: http://localhost:9393/login
-      scope: openid,password.write,scim.userids
+      scope: openid,password.write,scim.userids,dataflow.create,dataflow.view
       secret: secret
     uaa_admin:
       authorities: clients.read,clients.write,clients.secret,uaa.admin,scim.read,scim.write,password.write
@@ -152,6 +154,8 @@ oauth:
   user:
     authorities:
     - openid
+    - dataflow.view
+    - dataflow.create
     - scim.me
     - cloud_controller.read
     - cloud_controller.write
@@ -193,12 +197,15 @@ scim:
     uaa.user: Act as a user in the UAA
     zones.read: Read identity zones
     zones.write: Create and update identity zones
+    dataflow.create: Dataflow Create
+    dataflow.view: Dataflow View
   user:
     override: true
   userids_enabled: true
   users:
   - admin|u3n97o7h2f4ggrsymcox|admin||||uaa
-  - janne|janne|openid
+  - janne|janne|janne@example.com|Janne|Valkealahti|openid,dataflow.view,dataflow.create|uaa
+  - guest|guest|guest@example.com|Guest|Guest|openid,dataflow.view|uaa
 uaa:
   approvals:
     url: https://localhost:8080/uaa/approvals
