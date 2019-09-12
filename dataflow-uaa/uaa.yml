@@ -154,8 +154,6 @@ oauth:
   user:
     authorities:
     - openid
-    - dataflow.view
-    - dataflow.create
     - scim.me
     - cloud_controller.read
     - cloud_controller.write
