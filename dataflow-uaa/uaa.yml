@@ -136,14 +136,19 @@ oauth:
     ssl: true
   clients:
     dataflow:
-      authorities: uaa.resource,dataflow.create,dataflow.view
+      authorities: uaa.resource,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
       authorized-grant-types: password,implicit,authorization_code,client_credentials,refresh_token
       autoapprove:
       - openid
       - dataflow.view
+      - dataflow.deploy
+      - dataflow.destroy
+      - dataflow.manage
+      - dataflow.modify
+      - dataflow.schedule
       - dataflow.create
       redirect-uri: http://localhost:9393/login
-      scope: openid,password.write,scim.userids,dataflow.create,dataflow.view
+      scope: openid,password.write,scim.userids,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
       secret: secret
     uaa_admin:
       authorities: clients.read,clients.write,clients.secret,uaa.admin,scim.read,scim.write,password.write
@@ -196,13 +201,18 @@ scim:
     zones.read: Read identity zones
     zones.write: Create and update identity zones
     dataflow.create: Dataflow Create
+    dataflow.deploy: Dataflow Deploy
+    dataflow.destroy: Dataflow Destroy
+    dataflow.manage: Dataflow Manage
+    dataflow.modify: Dataflow Modify
+    dataflow.schedule: Dataflow Schedule
     dataflow.view: Dataflow View
   user:
     override: true
   userids_enabled: true
   users:
   - admin|u3n97o7h2f4ggrsymcox|admin||||uaa
-  - janne|janne|janne@example.com|Janne|Valkealahti|openid,dataflow.view,dataflow.create|uaa
+  - janne|janne|janne@example.com|Janne|Valkealahti|openid,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create|uaa
   - guest|guest|guest@example.com|Guest|Guest|openid,dataflow.view|uaa
 uaa:
   approvals:

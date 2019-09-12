@@ -38,14 +38,14 @@ services:
       - SPRING_CLOUD_DATAFLOW_SECURITY_AUTHORIZATION_MAPOAUTHSCOPES=true
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_CREATE=dataflow.create
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_DEPLOY=dataflow.deploy
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_DESTROY=dataflow.destoy
+      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_DESTROY=dataflow.destroy
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_MANAGE=dataflow.manage
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_MODIFY=dataflow.modify
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_SCHEDULE=dataflow.schedule
       - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_VIEW=dataflow.view
       - SECURITY_OAUTH2_CLIENT_CLIENTID=dataflow
       - SECURITY_OAUTH2_CLIENT_CLIENTSECRET=secret
-      - SECURITY_OAUTH2_CLIENT_SCOPE=openid,dataflow.create,dataflow.view
+      - SECURITY_OAUTH2_CLIENT_SCOPE=openid,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
       - SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI=http://localhost:8080/uaa/oauth/token
       - SECURITY_OAUTH2_CLIENT_USERAUTHORIZATIONURI=http://localhost:8080/uaa/oauth/authorize
       - SECURITY_OAUTH2_RESOURCE_USERINFOURI=http://localhost:8080/uaa/userinfo

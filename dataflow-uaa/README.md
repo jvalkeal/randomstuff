@@ -6,7 +6,7 @@ $ docker-compose -f docker-compose-oauth.yml pull
 $ docker-compose -f docker-compose-oauth.yml up --force-recreate
 $ docker-compose -f docker-compose-oauth.yml down
 ```
-There is one user `janne` with pw `janne`.
+There is user `janne` with pw `janne` as full access, and `guest` with pw `guest` as view access.
 
 
 ```
