@@ -25,6 +25,27 @@ services:
     environment:
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.map-oauth-scopes=true
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_CREATE=dataflow.create
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_DEPLOY=dataflow.deploy
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_DESTROY=dataflow.destroy
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_MANAGE=dataflow.manage
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_MODIFY=dataflow.modify
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_SCHEDULE=dataflow.schedule
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_VIEW=dataflow.view
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_REDIRECT_URI={baseUrl}/login/oauth2/code/{registrationId}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_AUTHORIZATION_GRANT_TYPE=authorization_code
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_SCOPE=openid
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_JWK_SET_URI=http://localhost:8080/uaa/token_keys
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_TOKEN_URI=http://localhost:8080/uaa/oauth/token
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_USER_INFO_URI=http://localhost:8080/uaa/userinfo
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_USER_NAME_ATTRIBUTE=user_name
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_AUTHORIZATION_URI=http://localhost:8080/uaa/oauth/authorize
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_INTROSPECTION_URI=http://localhost:8080/uaa/introspect
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENT_SECRET=secret
 
   dataflow-server:
     image: springcloud/spring-cloud-dataflow-server:latest
@@ -35,19 +56,26 @@ services:
     environment:
       - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://localhost:7577/api
       - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672
-      - SPRING_CLOUD_DATAFLOW_SECURITY_AUTHORIZATION_MAPOAUTHSCOPES=true
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_CREATE=dataflow.create
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_DEPLOY=dataflow.deploy
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_DESTROY=dataflow.destroy
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_MANAGE=dataflow.manage
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_MODIFY=dataflow.modify
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_SCHEDULE=dataflow.schedule
-      - spring.cloud.dataflow.security.authorization.role-mappings.ROLE_VIEW=dataflow.view
-      - SECURITY_OAUTH2_CLIENT_CLIENTID=dataflow
-      - SECURITY_OAUTH2_CLIENT_CLIENTSECRET=secret
-      - SECURITY_OAUTH2_CLIENT_SCOPE=openid,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
-      - SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI=http://localhost:8080/uaa/oauth/token
-      - SECURITY_OAUTH2_CLIENT_USERAUTHORIZATIONURI=http://localhost:8080/uaa/oauth/authorize
-      - SECURITY_OAUTH2_RESOURCE_USERINFOURI=http://localhost:8080/uaa/userinfo
-      - SECURITY_OAUTH2_RESOURCE_TOKENINFOURI=http://localhost:8080/uaa/check_token
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.map-oauth-scopes=true
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_CREATE=dataflow.create
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_DEPLOY=dataflow.deploy
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_DESTROY=dataflow.destroy
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_MANAGE=dataflow.manage
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_MODIFY=dataflow.modify
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_SCHEDULE=dataflow.schedule
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_VIEW=dataflow.view
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_REDIRECT_URI={baseUrl}/login/oauth2/code/{registrationId}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_AUTHORIZATION_GRANT_TYPE=authorization_code
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_UAA_SCOPE=openid,dataflow.create,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.view
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_JWK_SET_URI=http://localhost:8080/uaa/token_keys
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_TOKEN_URI=http://localhost:8080/uaa/oauth/token
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_USER_INFO_URI=http://localhost:8080/uaa/userinfo
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_USER_NAME_ATTRIBUTE=user_name
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_UAA_AUTHORIZATION_URI=http://localhost:8080/uaa/oauth/authorize
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_INTROSPECTION_URI=http://localhost:8080/uaa/introspect
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_AUTHORIZATION_CHECK_TOKEN_ACCESS=isAuthenticated()
 

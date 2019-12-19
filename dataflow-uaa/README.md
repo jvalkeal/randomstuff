@@ -14,3 +14,8 @@ $ uaac target http://localhost:8080/uaa
 $ uaac token client get uaa_admin -s fdejwhatgumb99x1ras3
 ```
 
+Or using dataflow/skipper jars directly with uaa
+
+```
+java -jar <dataflow/skipper jar> --spring.config.additional-location <dataflow-uaa.yml/skipper-uaa.yml>
+```
