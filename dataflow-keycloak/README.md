@@ -93,6 +93,6 @@ Login with `admin` and `password`
 
 ![](images/dataflow-2.png)
 
-And you've loggin in as admin rights and can start playing with it.
+And you've logged in as admin rights and can start playing with it.
 
 ![](images/dataflow-3.png)
