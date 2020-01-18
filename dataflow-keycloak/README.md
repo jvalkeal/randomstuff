@@ -72,7 +72,7 @@ Copy secret to be placed into dataflow/skipper configs.
 In _dataflow-keycloak.yml_ and _skipper-keycloak.yml`_
 modify _client-secret_ with value `347573ad-cd1e-407d-a060-91a437d30e30`
 
-Keycload will also give known other settings directly from
+Keycloak will also give known other settings directly from
 `http://localhost:8844/auth/realms/dataflow/.well-known/openid-configuration` which are reflected to _yml_ files.
 
 ## Start Servers
