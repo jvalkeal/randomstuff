@@ -1,0 +1,39 @@
+spring:
+  cloud:
+    skipper:
+      security:
+        authorization:
+          provider-role-mappings:
+            keycloak:
+              map-oauth-scopes: true
+              role-mappings:
+                ROLE_VIEW: dataflow.view
+                ROLE_CREATE: dataflow.create
+                ROLE_MANAGE: dataflow.manage
+                ROLE_DEPLOY: dataflow.deploy
+                ROLE_DESTROY: dataflow.destroy
+                ROLE_MODIFY: dataflow.modify
+                ROLE_SCHEDULE: dataflow.schedule
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            authorization-grant-type: authorization_code
+            client-id: dataflow
+            client-secret: 347573ad-cd1e-407d-a060-91a437d30e30
+            scope:
+            - openid
+        provider:
+          keycloak:
+            jwk-set-uri: http://localhost:8844/auth/realms/dataflow/protocol/openid-connect/certs
+            token-uri: http://localhost:8844/auth/realms/dataflow/protocol/openid-connect/token
+            user-info-uri: http://localhost:8844/auth/realms/dataflow/protocol/openid-connect/userinfo
+            user-name-attribute: user_name
+            authorization-uri: http://localhost:8844/auth/realms/dataflow/protocol/openid-connect/auth
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8844/auth/realms/dataflow/protocol/openid-connect/token/introspect
+          client-id: dataflow
+          client-secret: 347573ad-cd1e-407d-a060-91a437d30e30
