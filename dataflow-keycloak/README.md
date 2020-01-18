@@ -69,7 +69,7 @@ Copy secret to be placed into dataflow/skipper configs.
 ![](images/client-secret.png)
 
 ## Modify Servers Configs
-In _dataflow-keycloak.yml_ and _skipper-keycloak.yml`_
+In _dataflow-keycloak.yml_ and _skipper-keycloak.yml_
 modify _client-secret_ with value `347573ad-cd1e-407d-a060-91a437d30e30`
 
 Keycloak will also give known other settings directly from
