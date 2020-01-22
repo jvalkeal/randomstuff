@@ -55,7 +55,7 @@ services:
     network_mode: host
     environment:
       - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://localhost:7577/api
-      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=localhost:5672
       - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.map-oauth-scopes=true
       - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_CREATE=dataflow.create
       - spring.cloud.dataflow.security.authorization.provider-role-mappings.uaa.role-mappings.ROLE_DEPLOY=dataflow.deploy
