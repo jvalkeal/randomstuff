@@ -19,3 +19,12 @@ Or using dataflow/skipper jars directly with uaa
 ```
 java -jar <dataflow/skipper jar> --spring.config.additional-location=<dataflow-uaa.yml/skipper-uaa.yml>
 ```
+
+Using shell with proper oauth config:
+```
+java -jar <shell jar> \
+  --spring.config.additional-location=dataflow-uaa-shell.yml \
+  --dataflow.username=janne \
+  --dataflow.password=janne
+```
+

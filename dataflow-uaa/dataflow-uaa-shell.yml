@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          dataflow-shell:
+            provider: uaa
+            client-id: dataflow
+            client-secret: secret
+            authorization-grant-type: password
+            scope:
+            - dataflow.view
+            - dataflow.deploy
+            - dataflow.destroy
+            - dataflow.manage
+            - dataflow.modify
+            - dataflow.schedule
+            - dataflow.create
+        provider:
+          uaa:
+            issuer-uri: http://localhost:8080/uaa/oauth/token
