@@ -5,7 +5,7 @@ encryption:
   - label: uaa-encryption-key-1
     passphrase: jfmaan1xuiwbkklytr57
 issuer:
-  uri: http://localhost/uaa:8080
+  uri: http://localhost:8080/uaa
 jwt:
   token:
     policy:
