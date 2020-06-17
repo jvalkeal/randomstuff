@@ -147,7 +147,7 @@ oauth:
       - dataflow.modify
       - dataflow.schedule
       - dataflow.create
-      redirect-uri: http://localhost:9393/login
+      redirect-uri: http://localhost:9393/login,http://localhost:4200/login
       scope: openid,password.write,scim.userids,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
       secret: secret
     uaa_admin:
