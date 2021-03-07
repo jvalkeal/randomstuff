@@ -21,7 +21,7 @@ $ INSTANCE_INDEX=0 java -jar target/smlock-0.0.1-SNAPSHOT.jar --spring.profiles.
 $ INSTANCE_INDEX=1 java -jar target/smlock-0.0.1-SNAPSHOT.jar --spring.profiles.active=postgres --server.port=8082
 ```
 
-From instance 2, request states:
+From instance 1, request states:
 ```shell
 14:05 $ http :8082/state
 HTTP/1.1 200
@@ -34,13 +34,13 @@ Keep-Alive: timeout=60
 ObjectState [getIds()=[S1], getClass()=class org.springframework.statemachine.state.ObjectState, hashCode()=1653433525, toString()=AbstractState [id=S1, pseudoState=org.springframework.statemachine.state.DefaultPseudoState@46f9b0b4, deferred=[], entryActions=[], exitActions=[], stateActions=[], regions=[], submachine=null]]
 
 ```
-From instance 1, switch between states:
+From instance 0, switch between states:
 ```shell
 $ http POST :8081/event?id=E1
 $ http POST :8081/event?id=E2
 ```
 
-Transition from S1 to S2 contains sleep, so while that happens, instance 2 should not be able to lock machine:
+Transition from S1 to S2 contains sleep, so while that happens, instance 1 should not be able to lock machine:
 
 ```shell
 $ $ http :8082/state
