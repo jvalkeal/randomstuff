@@ -59,3 +59,43 @@ Transfer-Encoding: chunked
     "timestamp": "2021-03-07T14:33:52.881+00:00"
 }
 ```
+
+Some queries from db:
+```shell
+$ docker exec -it test-postgres psql -U spring -d sm
+psql (10.5 (Debian 10.5-1.pgdg90+1))
+Type "help" for help.
+sm=# \dt
+               List of relations
+ Schema |        Name         | Type  | Owner
+--------+---------------------+-------+--------
+ public | action              | table | spring
+ public | deferred_events     | table | spring
+ public | guard               | table | spring
+ public | state               | table | spring
+ public | state_entry_actions | table | spring
+ public | state_exit_actions  | table | spring
+ public | state_machine       | table | spring
+ public | state_state_actions | table | spring
+ public | statemachine_lock   | table | spring
+ public | transition          | table | spring
+ public | transition_actions  | table | spring
+(11 rows)
+
+sm=# select * from state_machine;
+ machine_id | state | state_machine_context
+------------+-------+-----------------------
+ test       | S1    |                 16525
+(1 row)
+
+sm=# select * from statemachine_lock;
+               lock_key               | region  |              client_id               |      created_date
+--------------------------------------+---------+--------------------------------------+-------------------------
+ 098f6bcd-4621-3373-8ade-4e832627b4f6 | DEFAULT | SMLOCK-0                             | 2021-03-07 14:50:50.042
+(1 row)
+
+ machine_id | state | state_machine_context
+------------+-------+-----------------------
+ test       | S2    |                 16526
+(1 row)
+```
