@@ -6,6 +6,9 @@ spring:
   h2:
     console:
       enabled: true
+server:
+  error:
+    include-message: always
 management:
   endpoints:
     web:

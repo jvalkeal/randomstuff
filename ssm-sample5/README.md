@@ -40,19 +40,19 @@ $ http POST :8081/event?id=E2
 Transition from S1 to S2 contains sleep, so while that happens, instance 2 should not be able to lock machine:
 
 ```shell
-$ http :8082/state
+$ $ http :8082/state
 HTTP/1.1 423
 Connection: keep-alive
 Content-Type: application/json
-Date: Sun, 07 Mar 2021 14:05:47 GMT
+Date: Sun, 07 Mar 2021 14:33:52 GMT
 Keep-Alive: timeout=60
 Transfer-Encoding: chunked
 
 {
     "error": "Locked",
-    "message": "",
+    "message": "Unable to get locked machine test",
     "path": "/state",
     "status": 423,
-    "timestamp": "2021-03-07T14:05:47.667+00:00"
+    "timestamp": "2021-03-07T14:33:52.881+00:00"
 }
 ```
