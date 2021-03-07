@@ -1,5 +1,8 @@
 # Statemachine Locking Demo
 
+Contains custom _LockingStateMachineService_ which uses Spring Integration _JdbcLockRegistry_
+to lock machine into one service intance.
+
 Create database:
 ```shell
 $ docker stop test-postgres && docker rm test-postgres

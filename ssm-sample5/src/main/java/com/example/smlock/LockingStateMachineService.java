@@ -42,11 +42,6 @@ public class LockingStateMachineService<S, E> extends DefaultStateMachineService
 		this.lockRegistry = lockRegistry;
 	}
 
-	// @Override
-	// public StateMachine<S, E> acquireStateMachine(String machineId) {
-	// 	return super.acquireStateMachine(machineId);
-	// }
-
 	@Override
 	public StateMachine<S, E> acquireStateMachine(String machineId, boolean start) {
 		lock(machineId);
