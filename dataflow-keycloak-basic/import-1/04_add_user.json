@@ -1,0 +1,15 @@
+{
+  "realm": "dataflow",
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "realm": "dataflow",
+  "roles": {
+    "client": {
+      "dataflow": [
+        {
+          "name": "ADMIN",
+          "composite": false,
+          "clientRole": true
+        }
+      ]
+    }
+  }
+}

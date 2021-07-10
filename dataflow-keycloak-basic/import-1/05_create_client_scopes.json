@@ -1,0 +1,33 @@
+{
+  "realm": "dataflow",
+  "clientScopes": [
+    {
+      "name": "dataflow.create",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.deploy",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.destroy",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.manage",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.modify",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.schedule",
+      "protocol": "openid-connect"
+    },
+    {
+      "name": "dataflow.view",
+      "protocol": "openid-connect"
+    }
+  ]
+}
