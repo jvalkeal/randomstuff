@@ -1,0 +1,23 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: system:dataflow
+            client-secret: secret
+            client-authentication-method: post
+            authorization-grant-type: password
+            scope:
+            - openid
+            - offline_access
+            - dataflow.view
+            - dataflow.deploy
+            - dataflow.destroy
+            - dataflow.manage
+            - dataflow.modify
+            - dataflow.schedule
+            - dataflow.create
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8099/auth/realms/dataflow

@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+
+  keycloak-server:
+    image: quay.io/keycloak/keycloak:14.0.0
+    container_name: keycloak-server-keycloak2
+    networks:
+      - auth-network
+    ports:
+      - "8099:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_FRONTEND_URL=http://localhost:8099/auth
+
+  keycloak-config-cli:
+    image: adorsys/keycloak-config-cli:latest-14.0.0
+    container_name: keycloak-config-cli-keycloak2
+    restart: on-failure
+    networks:
+      - auth-network
+    environment:
+      - KEYCLOAK_URL=http://keycloak-server:8080/auth
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - IMPORT_PATH=/config
+    volumes:
+      - ./import-2:/config
+
+  rabbitmq-server:
+    image: rabbitmq:latest
+    container_name: rabbitmq-server-keycloak2
+    networks:
+      - auth-network
+    ports:
+      - "5672:5672"
+
+  skipper-server:
+    image: springcloud/spring-cloud-skipper-server:2.8.0-SNAPSHOT
+    container_name: skipper-server-keycloak2
+    networks:
+      - auth-network
+    ports:
+      - "7577:7577"
+    environment:
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
+
+  dataflow-server:
+    image: springcloud/spring-cloud-dataflow-server:2.9.0-SNAPSHOT
+    container_name: dataflow-server-keycloak2
+    restart: on-failure
+    networks:
+      - auth-network
+    ports:
+      - "9393:9393"
+    environment:
+      - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://skipper-server:7577/api
+      - SPRING_CLOUD_DATAFLOW_TASK_USEUSERACCESSTOKEN=true
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.map-oauth-scopes=true
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_CREATE=dataflow.create
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_DEPLOY=dataflow.deploy
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_DESTROY=dataflow.destroy
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_MANAGE=dataflow.manage
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_MODIFY=dataflow.modify
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_SCHEDULE=dataflow.schedule
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.role-mappings.ROLE_VIEW=dataflow.view
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI={baseUrl}/login/oauth2/code/{registrationId}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_AUTHORIZATION_GRANT_TYPE=authorization_code
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=system:dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_AUTHENTICATION_METHOD=post
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_SCOPE=openid,profile,email,offline_access,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_JWK_SET_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/certs
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_TOKEN_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/token
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_INFO_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/userinfo
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_AUTHORIZATION_URI=http://localhost:8099/auth/realms/dataflow/protocol/openid-connect/auth
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=user_name
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/certs
+
+networks:
+  auth-network:
+    driver: bridge

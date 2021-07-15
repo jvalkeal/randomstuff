@@ -1,0 +1,20 @@
+{
+  "realm": "dataflow",
+  "clients": [
+    {
+      "clientId": "system:dataflow",
+      "optionalClientScopes": [
+        "dataflow.view",
+        "dataflow.manage",
+        "address",
+        "dataflow.destroy",
+        "phone",
+        "dataflow.schedule",
+        "dataflow.create",
+        "offline_access",
+        "dataflow.deploy",
+        "dataflow.modify"
+      ]
+    }
+  ]
+}
