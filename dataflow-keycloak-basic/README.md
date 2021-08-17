@@ -12,7 +12,7 @@ Meant to show that short token lifetime works when `composed-task-runner` is con
 ### Start Services via Docker Compose
 Using embedded db.
 ```
-docker-compose-1 -f docker-compose.yml up --force-recreate
+docker-compose -f docker-compose-1.yml up --force-recreate
 ```
 
 This will start `rabbitmq`, `skipper`, `dataflow`, `keycloak` and import container setting up keycloak.
@@ -47,7 +47,7 @@ As we're only interested client layer, `skipper` doesn't enable auth.
 ### Start Services via Docker Compose
 Using embedded db.
 ```
-docker-compose-2 -f docker-compose.yml up --force-recreate
+docker-compose -f docker-compose-2.yml up --force-recreate
 ```
 
 This will start `rabbitmq`, `skipper`, `dataflow`, `keycloak` and import container setting up keycloak.
