@@ -1,0 +1,21 @@
+{
+  "realm": "dataflow",
+  "groups": [
+    {
+      "name": "Admins",
+      "path": "/Admins",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "Users",
+      "path": "/Users",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "realm": "dataflow",
+  "clients": [
+    {
+      "clientId": "dataflow",
+      "enabled": true,
+      "secret": "secret",
+      "redirectUris": [
+        "http://localhost:9393/*"
+      ],
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "60"
+      }
+    }
+  ]
+}

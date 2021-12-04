@@ -4,7 +4,7 @@ services:
 
   keycloak-server:
     image: quay.io/keycloak/keycloak:14.0.0
-    container_name: keycloak-server-keycloak1
+    container_name: keycloak-server-keycloak4
     networks:
       - auth-network
     ports:
@@ -16,7 +16,7 @@ services:
 
   keycloak-config-cli:
     image: adorsys/keycloak-config-cli:latest-14.0.0
-    container_name: keycloak-config-cli-keycloak1
+    container_name: keycloak-config-cli-keycloak4
     restart: on-failure
     networks:
       - auth-network
@@ -26,11 +26,11 @@ services:
       - KEYCLOAK_PASSWORD=admin
       - IMPORT_PATH=/config
     volumes:
-      - ./import-1:/config
+      - ./import-4:/config
 
   rabbitmq-server:
     image: rabbitmq:latest
-    container_name: rabbitmq-server-keycloak1
+    container_name: rabbitmq-server-keycloak4
     networks:
       - auth-network
     ports:
@@ -38,13 +38,12 @@ services:
 
   skipper-server:
     image: springcloud/spring-cloud-skipper-server:sectest
-    container_name: skipper-server-keycloak1
+    container_name: skipper-server-keycloak4
     networks:
       - auth-network
     ports:
       - "7577:7577"
     environment:
-      - LOGGING_LEVEL_ROOT=DEBUG
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
       - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.map-oauth-scopes=true
@@ -71,12 +70,13 @@ services:
 
   dataflow-server:
     image: springcloud/spring-cloud-dataflow-server:sectest
-    container_name: dataflow-server-keycloak1
+    container_name: dataflow-server-keycloak4
     networks:
       - auth-network
     ports:
       - "9393:9393"
     environment:
+      - XSERVER_SERVLET_CONTEXT_PATH=/scdf
       - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://skipper-server:7577/api
       - SPRING_CLOUD_DATAFLOW_TASK_USEUSERACCESSTOKEN=true
       - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672

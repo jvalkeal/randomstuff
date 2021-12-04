@@ -92,3 +92,9 @@ Welcome to the Spring Cloud Data Flow shell. For assistance hit TAB or type "hel
 Successfully targeted http://localhost:9393/
 dataflow:>
 ```
+
+## Sample 3
+Shows role mapping with groups.
+
+## Sample 4
+Shows changed dataflow server servlet context path from root to `/scdf`.

@@ -1,0 +1,122 @@
+version: '3'
+
+services:
+
+  database-server:
+    image: postgres:10
+    container_name: database-server-keycloak3
+    networks:
+      - auth-network
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=spring
+      - POSTGRES_USER=spring
+      - POSTGRES_DB=dataflow
+
+  keycloak-server:
+    image: quay.io/keycloak/keycloak:14.0.0
+    container_name: keycloak-server-keycloak3
+    networks:
+      - auth-network
+    ports:
+      - "8081:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - XKEYCLOAK_FRONTEND_URL=http://keycloak-server:8080/auth
+
+  keycloak-config-cli:
+    image: adorsys/keycloak-config-cli:latest-14.0.0
+    container_name: keycloak-config-cli-keycloak3
+    restart: on-failure
+    networks:
+      - auth-network
+    environment:
+      - KEYCLOAK_URL=http://keycloak-server:8080/auth
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - IMPORT_PATH=/config
+    volumes:
+      - ./import-3:/config
+
+  rabbitmq-server:
+    image: rabbitmq:latest
+    container_name: rabbitmq-server-keycloak3
+    networks:
+      - auth-network
+    ports:
+      - "5672:5672"
+
+  skipper-server:
+    image: springcloud/spring-cloud-skipper-server:sectest
+    container_name: skipper-server-keycloak3
+    restart: on-failure
+    networks:
+      - auth-network
+    ports:
+      - "7577:7577"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMON_SECURITY=DEBUG
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-server:5432/dataflow
+      - SPRING_DATASOURCE_USERNAME=spring
+      - SPRING_DATASOURCE_PASSWORD=spring
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
+      - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.map-oauth-scopes=false
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.map-group-claims=true
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_CREATE=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_DEPLOY=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_DESTROY=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_MANAGE=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_MODIFY=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_SCHEDULE=Admins
+      - spring.cloud.skipper.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_VIEW=Users
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI={baseUrl}/login/oauth2/code/{registrationId}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_AUTHORIZATION_GRANT_TYPE=authorization_code
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_SCOPE=openid,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://keycloak-server:8080/auth/realms/dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=user_name
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/certs
+
+  dataflow-server:
+    image: springcloud/spring-cloud-dataflow-server:sectest
+    container_name: dataflow-server-keycloak3
+    restart: on-failure
+    networks:
+      - auth-network
+    ports:
+      - "9393:9393"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMON_SECURITY=DEBUG
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-server:5432/dataflow
+      - SPRING_DATASOURCE_USERNAME=spring
+      - SPRING_DATASOURCE_PASSWORD=spring
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=http://skipper-server:7577/api
+      - SPRING_CLOUD_DATAFLOW_TASK_USEUSERACCESSTOKEN=true
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_RABBITMQ_ADDRESSES=rabbitmq-server:5672
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.map-oauth-scopes=false
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.map-group-claims=true
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_CREATE=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_DEPLOY=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_DESTROY=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_MANAGE=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_MODIFY=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_SCHEDULE=Admins
+      - spring.cloud.dataflow.security.authorization.provider-role-mappings.keycloak.group-mappings.ROLE_VIEW=Users
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI={baseUrl}/login/oauth2/code/{registrationId}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_AUTHORIZATION_GRANT_TYPE=authorization_code
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_SCOPE=openid,dataflow.view,dataflow.deploy,dataflow.destroy,dataflow.manage,dataflow.modify,dataflow.schedule,dataflow.create
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://keycloak-server:8080/auth/realms/dataflow
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=user_name
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak-server:8080/auth/realms/dataflow/protocol/openid-connect/certs
+
+networks:
+  auth-network:
+    driver: bridge

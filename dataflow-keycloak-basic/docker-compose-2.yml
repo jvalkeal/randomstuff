@@ -37,7 +37,7 @@ services:
       - "5672:5672"
 
   skipper-server:
-    image: springcloud/spring-cloud-skipper-server:2.8.0-SNAPSHOT
+    image: springcloud/spring-cloud-skipper-server:2.9.0-SNAPSHOT
     container_name: skipper-server-keycloak2
     networks:
       - auth-network
@@ -48,7 +48,7 @@ services:
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100
 
   dataflow-server:
-    image: springcloud/spring-cloud-dataflow-server:2.9.0-SNAPSHOT
+    image: springcloud/spring-cloud-dataflow-server:2.10.0-SNAPSHOT
     container_name: dataflow-server-keycloak2
     restart: on-failure
     networks:

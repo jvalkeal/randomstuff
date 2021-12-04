@@ -1,0 +1,32 @@
+{
+  "realm": "dataflow",
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "groups": [
+        "/Admins",
+        "/Users"
+      ]
+    },
+    {
+      "username": "user1",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user1"
+        }
+      ],
+      "groups": [
+        "/Users"
+      ]
+    }
+  ]
+}
