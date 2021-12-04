@@ -1,0 +1,32 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'com.netflix.dgs.codegen' version '5.1.10'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+    implementation("com.netflix.graphql.dgs:graphql-dgs-client")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+generateJava{
+   schemaPaths = ['src/main/resources/graphql/schema.graphqls']
+   packageName = 'com.example.graphqlclientdemo.generated'
+   generateClient = true
+}
