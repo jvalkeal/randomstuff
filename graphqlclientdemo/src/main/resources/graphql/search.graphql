@@ -1,0 +1,8 @@
+query Search($text: String!) {
+  ... on ArtifactRepository {
+    name
+  }
+  ... on Project {
+    name
+  }
+}

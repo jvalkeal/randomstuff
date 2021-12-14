@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import com.example.graphqlclientdemo.generated.client.ArtifactRepositoriesGraphQLQuery;
 import com.example.graphqlclientdemo.generated.client.ArtifactRepositoriesProjectionRoot;
 import com.example.graphqlclientdemo.generated.client.GreetingGraphQLQuery;
+import com.example.graphqlclientdemo.generated.client.SearchGraphQLQuery;
+import com.example.graphqlclientdemo.generated.client.SearchProjectionRoot;
 import com.example.graphqlclientdemo.generated.types.ArtifactRepository;
+import com.example.graphqlclientdemo.generated.types.SearchResult;
 import com.jayway.jsonpath.TypeRef;
 import com.netflix.graphql.dgs.client.GraphQLResponse;
 import com.netflix.graphql.dgs.client.MonoGraphQLClient;
@@ -34,6 +37,7 @@ public class GraphqlclientdemoApplication implements CommandLineRunner {
 
 		greeting(client);
 		artifactRepositories(client);
+		search(client);
 	}
 
 	private void greeting(WebClientGraphQLClient client) {
@@ -58,6 +62,25 @@ public class GraphqlclientdemoApplication implements CommandLineRunner {
 		log.info("Result2 {}", repos);
 		List<String> names = repos.stream().map(r -> r.getName()).collect(Collectors.toList());
 		log.info("Result3 {}", names);
+	}
+
+	private void search(WebClientGraphQLClient client) {
+		SearchGraphQLQuery query = SearchGraphQLQuery.newRequest().text("spring").build();
+		SearchProjectionRoot projection = new SearchProjectionRoot()
+			.onArtifactRepository().name().getRoot()
+			.onProject().name().getRoot();
+		GraphQLQueryRequest request = new GraphQLQueryRequest(query, projection);
+		Mono<GraphQLResponse> response = client.reactiveExecuteQuery(request.serialize());
+		log.info("Request {}", request.serialize());
+		GraphQLResponse block = response.block();
+		log.info("Result1 {}", block);
+
+		TypeRef<List<SearchResult>> typeRef = new TypeRef<List<SearchResult>>(){};
+		List<SearchResult> stuff = block.extractValueAsObject("search", typeRef);
+		log.info("Result2 {}", stuff);
+		stuff.stream().forEach(s -> {
+			log.info("Class {}", s.getClass());
+		});
 	}
 
 	public static void main(String[] args) {
